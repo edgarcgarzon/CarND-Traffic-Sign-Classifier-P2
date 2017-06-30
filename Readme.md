@@ -1542,6 +1542,7 @@ printImages(X_images, index)
     Image data shape = (5, 32, 32, 3)
     Classes data shape = (5,)
     Clases:  [14 25  2 17 11]
+    
 
 
 
@@ -1549,6 +1550,16 @@ printImages(X_images, index)
 
 
 ### Predict the Sign Type for Each Image
+
+The resolution, constrast and shape definition of the new test images are higher compare with the ones used for training and test the neural network.
+
+What is expected are excellent results identifying "stop" (class 14 ) and "no entry" (class 17) due to the fact that their shapes and colors are the most clear and sharpest ones even with low resolution images. 
+
+Lower results are expected in the classification of speed limitation (Class 2) due to the fact that already in the train data set the low resolution makes, even for the human eye,  distinguish the limit (30, 50, etc).
+
+The lowest accuracy is expected in the warning signal (triangle with a shape inside: class 25 and 11) due the figure inside of the signal is completely "destroyed" during the transformation and moreover because already in the orignal images are completely blurred. In particular the image correspoing to the class 25 has a lot of rumor. 
+
+
 
 
 ```python
@@ -1624,7 +1635,9 @@ print("Model Accuracy = ", np.sum(comp)/5)
 ```
 
     Model Accuracy =  0.6
+    
 
+The accuracy on the captured images is 0.945% while it was 0.6% on the testing set thus It seems the model is overfitting
 
 ### Output Top 5 Softmax Probabilities For Each Image Found on the Web
 
@@ -1727,6 +1740,14 @@ printImages(classes, out3.indices[:,4])
 
 ![png](Traffic_Sign_Classifier/output_101_7.png)
 
+
+It seems how the circles and triangle forms are well predicted. By the other hand the shapes inside the forms could have a large margin of uncertitude. In particular of the class 25 ("Road work") is not classified in the first 5 images.
+
+#### TODO and improvements:
+- The test and validation data set are also unbalance. It could be interesting test and validate the model using a balanced data set or modify the "evaluate" function to weight the accuracy according to the class distribution.
+- Perform expeerimentation with other techniques of validation: cross validaiton.
+- Experiment with other types of optimizers.
+- Experiment with different optimizers
 
 
 ```python
